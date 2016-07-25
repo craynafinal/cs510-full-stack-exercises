@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+
+		<style type="text/css">
+			.header {
+				padding:10px;
+			}
+
+			.content {
+				padding:10px;
+			}
+
+			.content > ul {
+				margin:0px 0px 0px -20px;
+			}
+
+			.container {
+				border: 1px solid black;
+				display: inline-block;
+			}
+			.header {
+				background-color: black;
+				color: white;
+				text-indent: -1px;
+				height: 19px;
+			}
+			ul {
+				list-style-type: square;
+			}
+			.temp {
+				display: inline-block;
+				position: absolute;
+				top: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<div class="temp">first</div>
+			</div>
+			<div class="content">
+				<ul>
+					<li>first</li>
+					<li>second</li>
+					<li>third</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="header">
+				<div class="temp">second</div>
+			</div>
+			<div class="content">
+				<ul>
+					<li>first</li>
+					<li>second</li>
+					<li>third</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

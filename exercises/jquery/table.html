@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="output"></div>
+
+		<script type="text/javascript">
+			var functionCreate = function(intWidth, intHeight) {
+				// create a table with the width and height and in doing so, set the text to each cell to 'y.x'
+				
+				var ret = '';
+				
+  		  for (i = 1; i <= intHeight; i++) {
+					ret += "<tr>";
+
+				  for (j = 1; j <= intWidth; j++) {
+						ret += "<td>" + i + "." + j + "</td>";
+					}
+
+					ret += "</tr>";
+				}
+
+				jQuery('#output').append('<table border="1"></table>').children().append(ret);
+				return null;
+			};
+
+			jQuery('#output')
+				.append(functionCreate(3, 2))
+			;
+			
+			// expected table for functionCreate(1, 2):
+			//   <table border="1">
+			//     <tr>
+			//       <td>1.1</td>
+			//       <td>1.2</td>
+			//     </tr>
+			//   </table>
+			
+			// expected table for functionCreate(3, 2):
+			//   <table border="1">
+			//     <tr>
+			//       <td>1.1</td>
+			//       <td>1.2</td>
+			//       <td>1.3</td>
+			//     </tr>
+			//     <tr>
+			//       <td>2.1</td>
+			//       <td>2.2</td>
+			//       <td>2.3</td>
+			//     </tr>
+			//   </table>
+		</script>
+	</body>
+</html>
