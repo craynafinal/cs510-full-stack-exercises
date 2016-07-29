@@ -1,5 +1,27 @@
 var http = require('http'); // do not change this line
 
+var server = http.createServer(function(req, res) {
+	res.writeHead(200, {
+		'Content-Type': 'text/plain',
+		'Set-Cookie': 'identity=' + req.url
+	});
+
+	var cookies = req.headers.cookie;
+	var returnString = 'you must be new';
+
+	if (cookies !== undefined) {
+		var parts = cookies.split('=');
+
+		if (parts[0] === 'identity')
+			returnString = 'last time you visited \"' + parts[1] + '\"';
+	}
+
+	res.write(returnString);
+	res.end();
+});
+
+server.listen(process.env.PORT || 8080);
+
 // create a server just like in the first exercise
 // as shown in the examples, you are asked to respond to various requests in different ways
 // you have seen how to handle cookies before, this will use cookies more thoroughly

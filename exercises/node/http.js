@@ -4,7 +4,6 @@ var server = http.createServer(function(req, res) {
   if (req.url === '/missing') {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
 		res.write('your princess is in another castle');
-		//res.status(404).send('your princess is in another castle');
   } else if (req.url === '/redirect') {
 		res.writeHead(302, { 'Location': '/redirected' });
   } else if (req.url === '/cache') {
@@ -25,13 +24,6 @@ var server = http.createServer(function(req, res) {
 			'Content-Type': 'text/plain'
 		});
 
-/*
-		var incoming_cookies = '';
-
-		if (req.headers.cookie) {
-			incoming_cookies = cookie.parse(req.headers.cookie);
-		}	
-		*/
 		var incoming_cookies = req.headers.cookie;
 
 		if (incoming_cookies !== undefined && incoming_cookies.includes('hello')) {
