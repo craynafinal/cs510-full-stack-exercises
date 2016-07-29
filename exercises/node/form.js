@@ -1,5 +1,58 @@
 var http = require('http'); // do not change this line
 
+var server = http.createServer(function(req, res) {
+	var name = '';
+	var message = '';
+
+	if (req.url === '/form') {
+		res.writeHead(200, {
+			'Content-Type': 'text/html'
+		});
+
+		res.write('<!DOCTYPE html>');
+		res.write('<html>');
+			res.write('<body>');
+				res.write('<form action="/new" method="post">');
+					res.write('<input type="text" name="name">');
+					res.write('<input type="text" name="message">');
+					res.write('<input type="submit" value="submit">');
+				res.write('</form>');
+			res.write('</body>');
+		res.write('</html>');
+
+	} else if (req.url === '/new') {
+		res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+
+		var body = [];
+		req.on('error', function(err) {
+			console.error(err);
+		}).on('data', function(chunk) {
+			body.push(chunk);
+		}).on('end', function() {
+			body = Buffer.concat(body).toString();
+		});
+
+		res.write('thank you for your message');
+	} else if (req.url === '/list') {
+		res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+
+		var returnString = '';
+
+		if (name !== '' || message !== '') {
+			returnString = name + ': ' + message;
+		}
+		res.write(returnString);
+	}
+
+	res.end();
+});
+
+server.listen(process.env.PORT || 8080);
+
 // create a server just like in the first exercise
 // as shown in the examples, you are asked to respond to various requests in different ways
 // you will need to use a stream to retrieve the post data
