@@ -37,6 +37,7 @@ server.get('/cookie', function(req, res) {
     'Set-Cookie': 'hello=world'
 	});
 	res.write('i gave you a cookie');
+	res.end();
 });
 
 server.get('/check', function(req, res) {
