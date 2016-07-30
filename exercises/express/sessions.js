@@ -3,6 +3,36 @@
 var express = require('express'); // do not change this line
 var session = require('express-session'); // do not change this line
 
+var server = express();
+
+server.use(session({
+	'store': new session.MemoryStore(),
+	'secret': 'a secret to sign the cookie',
+	'resave': false,
+	'saveUninitialized': false,
+	'cookie': { 'maxAge': 86400 }
+}));
+
+server.get('/:parameter', function (req, res) {
+	res.status(200);
+
+	res.set({
+    'Content-Type': 'text/plain'
+  });
+
+	if (req.session.example === undefined) {
+		req.session.example = [];
+		req.session.example.push('/' + req.params.parameter);
+    res.send('you must be new');
+  } else {
+		res.write('your history:\n  ' + req.session.example.join('\n  '));
+		req.session.example.push('/' + req.params.parameter);  
+		res.end();
+	}
+});
+
+server.listen(process.env.PORT || 8080);
+
 // create an express server just like in the first exercise
 // as shown in the examples, you are asked to respond to various requests in different ways
 // you will need to use the session middleware to store the data
