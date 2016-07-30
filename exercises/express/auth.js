@@ -7,7 +7,10 @@ var strategy = require('passport-http'); // do not change this line
 var BasicStrategy = strategy.BasicStrategy;
 var server = express();
 
-//server.use(passport.initialization());
+// resolves cache problem that caused 304 error code
+server.disable('etag');
+
+server.use(passport.initialize());
 
 server.use(function(req, res, next) {
   console.log('incoming request');

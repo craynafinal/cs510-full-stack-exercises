@@ -5,6 +5,8 @@ var session = require('express-session'); // do not change this line
 
 var server = express();
 
+server.disable('etag');
+
 server.use(session({
 	'store': new session.MemoryStore(),
 	'secret': 'a secret to sign the cookie',
