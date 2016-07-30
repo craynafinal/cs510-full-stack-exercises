@@ -2,6 +2,60 @@
 
 var express = require('express'); // do not change this line
 
+var server = express();
+
+server.get('/missing', function(req, res) {
+	res.status(404);
+	res.set({
+    'Content-Type': 'text/plain'
+  });
+
+	res.write('your princess is in another castle');
+	res.end();
+});
+
+server.get('/redirect', function(req, res) {
+	res.status(302);
+	res.set({ 'Location': '/redirected' });
+	res.end();	
+});
+
+server.get('/cache', function(req, res) {
+	res.status(200);
+	res.set({ 
+		'Content-Type': 'text/plain',
+    'Cache-Control': 'max-age=86400'
+	});
+	res.write('cache this resource');
+	res.end();
+});
+
+server.get('/cookie', function(req, res) {
+	res.status(200);
+	res.set({
+		'Content-Type': 'text/plain',
+    'Set-Cookie': 'hello=world'
+	});
+	res.write('i gave you a cookie');
+});
+
+server.get('/check', function(req, res) {
+	res.status(200);
+  res.set({
+    'Content-Type': 'text/plain'
+  });
+
+	var cookies = req.headers.cookie;
+
+	if (cookies !== undefined && cookies.includes('hello')) {
+		res.write('yes');
+	} else {
+		res.write('no');	
+	}
+	res.end();
+});
+
+server.listen(process.env.PORT || 8080);
 // create an express server just like in the first exercise
 // as shown in the examples, you are asked to respond to various requests in different ways
 

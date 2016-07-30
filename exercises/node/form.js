@@ -1,8 +1,7 @@
 var http = require('http'); // do not change this line
+var message = [];
 
 var server = http.createServer(function(req, res) {
-	var name = '';
-	var message = '';
 
 	if (req.url === '/form') {
 		res.writeHead(200, {
@@ -19,20 +18,44 @@ var server = http.createServer(function(req, res) {
 				res.write('</form>');
 			res.write('</body>');
 		res.write('</html>');
-
 	} else if (req.url === '/new') {
-		res.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-
+		/*
+			1. prepare the stream to receive data
+			2. node will see the incoming data and that you prepared the stream, such that it will call the event handlers that you registered for receiving the data
+			3. after a call to the 'end' handler, you would make use of the received data
+			4. send the header (200, text/plain content-type)
+			5. write 'thank you for your message'
+			6. end the response
+			7. hand the execution back to the event handler of node
+		*/
 		var body = [];
+
 		req.on('error', function(err) {
 			console.error(err);
 		}).on('data', function(chunk) {
 			body.push(chunk);
 		}).on('end', function() {
 			body = Buffer.concat(body).toString();
+			
+			var posts = body.split('&');
+			var name = '';
+			var msg = '';
+ 
+			for (var idx in posts) {
+				var tokens = posts[idx].split('=');
+				if (tokens[0] === 'name')
+					name = tokens[1];
+				else if (tokens[0] === 'message')
+					msg = tokens[1];
+			}
+
+			if (name !== '' && msg !== '')
+				message.push(name + ': ' + msg);
 		});
+	
+		res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
 
 		res.write('thank you for your message');
 	} else if (req.url === '/list') {
@@ -42,8 +65,8 @@ var server = http.createServer(function(req, res) {
 
 		var returnString = '';
 
-		if (name !== '' || message !== '') {
-			returnString = name + ': ' + message;
+		if (message !== []) {
+			returnString = message.join('\n');
 		}
 		res.write(returnString);
 	}
