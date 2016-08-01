@@ -19,5 +19,6 @@
 			use mustache to produce the output:
 				hello max mustermann, our messsage of today is: "hello world"
 		-->
+		hello {{#user}}{{first}} {{last}}{{/user}}, our messsage of today is: "{{message}}"
 	</body>
 </html>
