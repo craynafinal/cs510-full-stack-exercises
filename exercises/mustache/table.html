@@ -6,6 +6,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 	</head>
 	<body>
+		<table border="1">
+			<tr>
+				<th>name</th>
+				<th>gender</th>
+			</tr>
+			{{#user}}{{#visible}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{gender}}</td>
+			</tr>
+			{{/visible}}{{/user}}
+		</table>
 		<!--
 			given a javascript object like:
 				{
