@@ -6,10 +6,71 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+		<script type="text/javascript">
+			jQuery('#color');
+			if('{{change}}' < 0) {
+				jQuery('#color').css({ 'background-color':'rgb(188, 103, 114)' });
+			} else {
+				jQuery('#color').css({ 'background-color':'#ADC4A2' });
+			}
+			getColor : function() {
+				return function(val, render) {
+
+				}
+			}
+
+			//http://mustache.github.io/mustache.5.html
+
+			
+			//<script>
+			//document.write("<div style='background-color: #bbbbbb'>Hello World!</div>");
+			// windows.document.write(moment(1231233134).format("Do MMM - HH:mm:ss"))	
+
+		</script>
 	</head>
 	<body>
+		<table border="1">
+				<tr>
+					<th>name</th>
+					<th>value</th>
+					<th>change</th>
+					<th>time</th>
+					<th>volume</th>
+				</tr>
+				{{#stock}}
+				<tr>
+					<td>{{name}}</td>
+					<td><script>document.write({{value}}.toFixed(2));</script></td>
+					<script>
+						var bgColor = 'rgb(188, 103, 114)';
+						if ({{change}} >= 0) {
+							bgColor = 'rgb(173, 196, 162)';
+						}
+						document.write("<td style=\"background-color: " + bgColor + "\">" + {{change}}.toFixed(2) + "</td>");
+						document.write("<td>" + moment({{time}}).format("YYYY.MM.DD - HH:MM:ss:SSS") + "</td>");
+
+						
+						var numVal = 'T';
+						var volumeVal = {{volume}};
+						if ({{volume}} >= 1000000000) {
+							numVal = 'B';
+						} else if ({{volume}} >= 1000000) {
+							numVal = 'M';
+						}
+
+						var firstThreeDigits = volumeVal.toString().substring(0,3);
+						var afterDot = parseInt((volumeVal).toString().substring(3,4));
+
+						if (parseInt((volumeVal).toString().substring(4,5)) >= 5) {
+							afterDot += 1;
+						}
+
+						document.write("<td>" + firstThreeDigits + "." + afterDot + " " + numVal + "</td>");
+					</script>
+				</tr>
+				{{/stock}}
+			</table>
 		<!--
 			given a javascript object like:
 				{
