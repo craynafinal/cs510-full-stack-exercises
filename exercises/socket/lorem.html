@@ -17,6 +17,10 @@
 
 			// when receiving a message event from the server, append the timestamp and the message to the output element
 			// for example, it should append '123: test\n' when receiving { 'timestamp':123, 'message':'test' } as the event data
+
+			socket.on('message', function(data) {
+				jQuery('#output').append(data['timestamp'] + ': ' + data['message'] + '\n');
+			});
 		</script>
 	</body>
 </html>
