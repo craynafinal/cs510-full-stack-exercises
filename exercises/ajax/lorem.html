@@ -18,6 +18,18 @@
 			// when somebody enters 'the input text' into the input textbox and clicks the submit button, the script should make a get request to: http://mercury.cs.pdx.edu/exercise/ajax/lorem.txt?input=the%20input%20text
 			// the data that is being received by this query is in the text format and might look like: 'received:the input text\ncalculated:eH2wO8kG'
 			// this received data should subsequently set as the content of the output element as follows: 'received:the input text\ncalculated:eH2wO8kG'
+
+			jQuery('#submit').click(function() {
+				jQuery.ajax({
+					url: 'http://mercury.cs.pdx.edu/exercise/ajax/lorem.txt?input=' + encodeURI(jQuery('#input').val()),
+					type: 'GET',
+					success: function(result) {
+						jQuery('#output').text(decodeURI(result));
+					}
+				});
+			});
+
+			//request.send(null);
 		</script>
 	</body>
 </html>
