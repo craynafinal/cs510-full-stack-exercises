@@ -46,6 +46,20 @@
 			// when somebody selects an option in the choice selection element, the script should make a get request to: http://mercury.cs.pdx.edu/exercise/ajax/lookup.json?name=max
 			// the data that is being received by this query is in the json format and might look like: { 'first':'max','last':'baum','gender':'male','random':'3BLJEkKk' }
 			// this received data should subsequently be used to set the first textbox, the last textbox, the gender radio button as well as the random textbox
+
+			jQuery('#choice').change(function() {
+        jQuery.ajax({
+          url: 'http://mercury.cs.pdx.edu/exercise/ajax/lookup.json?name=' + encodeURI(jQuery('option:selected', this).text()),
+          type: 'GET',
+          success: function(result) {
+            jQuery('#first').val(result['first']);
+						jQuery('#last').val(result['last']);
+						jQuery('input[value=' + result['gender'] + ']').attr('checked', 'checked');
+						jQuery('#random').val(result['random']);
+          }
+        });
+      });
+
 		</script>
 	</body>
 </html>
