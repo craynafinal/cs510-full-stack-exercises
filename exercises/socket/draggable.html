@@ -65,7 +65,41 @@
 
 			// when dragging an element around, send a drag event to the server containing the id of the element and the new left as well as the new right position
 
+			var drag = false;
+			var id;
+			var x;
+			var y;
+
+			jQuery('div[class="draggable"]').on("mousedown", function(event) {
+				drag = true;
+				id = jQuery(this).attr('id');
+				x = event.pageX - jQuery(this).offset().left;
+				y = event.pageY - jQuery(this).offset().top;
+			});
+			jQuery(document).on("mousemove", function(event) {
+				if (drag) {
+					jQuery('#' + id).css({'top':event.pageY - y,
+																		'left':event.pageX - x
+																	});
+					socket.emit('drag', {
+						'id': id,
+						'left': jQuery('#' + id).position().left,
+						'top': jQuery('#' + id).position().top
+					});
+
+				}
+			
+			});
+			jQuery(document).on("mouseup", function() {
+				drag = false;
+			});
+
 			// when receiving a drag event from the server, use the contaianed id and the left as well as right position to update the associated element
+
+			socket.on('drag', function(data) {
+				jQuery('#' + data['id']).css('left', data['left']);
+				jQuery('#' + data['id']).css('top', data['top']);
+			});
 		</script>
 	</body>
 </html>
